@@ -39,8 +39,19 @@ function displayTemp(response) {
   iconElement.setAttribute("src", response.data.condition.icon_url);
 }
 
-let key = "2374eba8044tffoa6bba2f4241b376c8";
-let query = "Barcelona";
-let url = `https://api.shecodes.io/weather/v1/current?query=${query}&key=${key}&units=metric`;
+function search(query) {
+  let key = "2374eba8044tffoa6bba2f4241b376c8";
+  let url = `https://api.shecodes.io/weather/v1/current?query=${query}&key=${key}&units=metric`;
 
-axios.get(url).then(displayTemp);
+  axios.get(url).then(displayTemp);
+}
+
+function handleSubmit(event) {
+  event.preventDefault();
+
+  let queryInputElement = document.querySelector("#city-input");
+  search(queryInputElement.value);
+}
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
