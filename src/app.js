@@ -18,10 +18,11 @@ function formatDate(timeStamp) {
     "Saturday",
   ];
   let day = days[date.getDay()];
-  return `${day} ${hours} ${minutes}`;
+  return `${day} ${hours}:${minutes}`;
 }
 
 function displayTemp(response) {
+  console.log(response.data);
   let tempElement = document.querySelector("#temperature");
   tempElement.innerHTML = Math.round(response.data.temperature.current);
   let cityElement = document.querySelector("#city");
@@ -34,9 +35,12 @@ function displayTemp(response) {
   windElement.innerHTML = Math.round(response.data.wind.speed);
   let dateElement = document.querySelector("#date");
   dateElement.innerHTML = formatDate(response.data.time * 1000);
+  let iconElement = document.querySelector("#icon");
+  iconElement.setAttribute("src", response.data.condition.icon_url);
 }
+
 let key = "2374eba8044tffoa6bba2f4241b376c8";
-let url =
-  "https://api.shecodes.io/weather/v1/current?query=New York&key=2374eba8044tffoa6bba2f4241b376c8&units=metric";
+let query = "Barcelona";
+let url = `https://api.shecodes.io/weather/v1/current?query=${query}&key=${key}&units=metric`;
 
 axios.get(url).then(displayTemp);
