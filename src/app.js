@@ -37,6 +37,8 @@ function displayTemp(response) {
   dateElement.innerHTML = formatDate(response.data.time * 1000);
   let iconElement = document.querySelector("#icon");
   iconElement.setAttribute("src", response.data.condition.icon_url);
+
+  celsiusTemperature = response.data.temperature.current;
 }
 
 function search(query) {
@@ -55,12 +57,24 @@ function handleSubmit(event) {
 
 function showFahrenheitTemperature(event) {
   event.preventDefault();
-  alert("Fahrenheit link clicked");
+  let tempElement = document.querySelector("#temperature");
+
+  //remove the active class in the celsius link
+  celsiusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
+
+  let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
+
+  tempElement.innerHTML = Math.round(fahrenheitTemperature);
 }
 
-function search(query) {
-  // code to search for the weather using the query parameter
-  console.log("Searching for weather using query:", query);
+function showCelsiusTemperature(event) {
+  event.preventDefault();
+  let tempElement = document.querySelector("#temperature");
+
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
+  tempElement.innerHTML = Math.round(celsiusTemperature);
 }
 
 let form = document.querySelector("#search-form");
@@ -68,5 +82,8 @@ form.addEventListener("submit", handleSubmit);
 
 let fahrenheitLink = document.querySelector("#fahrenheit-link");
 fahrenheitLink.addEventListener("click", showFahrenheitTemperature);
+
+let celsiusLink = document.querySelector("#celsius-link");
+celsiusLink.addEventListener("click", showCelsiusTemperature);
 
 search("London");
