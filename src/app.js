@@ -53,5 +53,20 @@ function handleSubmit(event) {
   search(queryInputElement.value);
 }
 
+function showFahrenheitTemperature(event) {
+  event.preventDefault();
+  alert("Fahrenheit link clicked");
+}
+
+function search(query) {
+  // code to search for the weather using the query parameter
+  console.log("Searching for weather using query:", query);
+}
+
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
+
+let fahrenheitLink = document.querySelector("#fahrenheit-link");
+fahrenheitLink.addEventListener("click", showFahrenheitTemperature);
+
+search("London");
