@@ -33,7 +33,7 @@ li:first-letter {
 .weather-app-wrapper {
   max-width: 600px;
   margin: 30px auto;
-  background-image: url("");
+  background-image: url("src/Mauritius.jpg");
 }
 
 .weather-app {

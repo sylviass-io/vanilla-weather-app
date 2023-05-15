@@ -2,8 +2,10 @@ function formatDate(timestamp) {
   let date = new Date(timestamp);
   let options = {
     weekday: "short",
+    month: "short",
+    day: "numeric",
   };
-  return date.toLocaleDateString("en-US", options);
+  return date.toLocaleDateString("en-UK", options);
 }
 
 function formatDay(timestamp) {
