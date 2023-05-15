@@ -1,24 +1,17 @@
-function formatDate(timeStamp) {
-  let date = new Date(timeStamp);
-  let hours = date.getHours();
-  if (hours < 10) {
-    hours = `0${hours}`;
-  }
-  let minutes = date.getMinutes();
-  if (minutes < 10) {
-    minutes = `0${minutes}`;
-  }
-  let days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  let day = days[date.getDay()];
-  return `${day} ${hours}:${minutes}`;
+function formatDate(timestamp) {
+  let date = new Date(timestamp);
+  let options = {
+    weekday: "short",
+  };
+  return date.toLocaleDateString("en-US", options);
+}
+
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[day];
 }
 
 function displayForecast(response) {
@@ -27,12 +20,12 @@ function displayForecast(response) {
   let forecastHTML = `<div class="row">`;
 
   forecast.forEach(function (dailyForecast, index) {
-    if (index < 5) {
+    if (index < 6) {
       forecastHTML += `<div class="col-2">
         <div class="weather-forecast-date">${formatDate(
           dailyForecast.time * 1000
         )}</div>
-        ${index}
+        
         <img src="${dailyForecast.condition.icon_url}" alt="${
         dailyForecast.condition.description
       }" width="42" />
