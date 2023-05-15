@@ -22,38 +22,34 @@ function formatDate(timeStamp) {
 }
 
 function displayForecast(response) {
-  console.log(response.data.daily);
+  let forecast = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
-
-  let days = ["Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
   let forecastHTML = `<div class="row">`;
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `
-      <div class="col-2">
-        <div class="weather-forecast-date">${day}</div>
-        <img
-          src="http://openweathermap.org/img/wn/50d@2x.png"
-          alt=""
-          width="42"
-        />
+
+  forecast.forEach(function (dailyForecast) {
+    forecastHTML += `<div class="col-2">
+        <div class="weather-forecast-date">${formatDate(
+          dailyForecast.time * 1000
+        )}</div>
+        <img src="${dailyForecast.condition.icon_url}" alt="${
+      dailyForecast.condition.description
+    }" width="42" />
         <div class="weather-forecast-temperatures">
-          <span class="weather-forecast-temperature-max"> 18° </span>
-          <span class="weather-forecast-temperature-min"> 12° </span>
+          <span class="weather-forecast-temperature-max">${Math.round(
+            dailyForecast.temperature.maximum
+          )}</span>
+          <span class="weather-forecast-temperature-min">${Math.round(
+            dailyForecast.temperature.minimum
+          )}</span>
         </div>
-      </div>
-  `;
+      </div>`;
   });
 
-  forecastHTML = forecastHTML + `</div>`;
+  forecastHTML += `</div>`;
   forecastElement.innerHTML = forecastHTML;
 }
 
 function getForecast(coordinates) {
-  console.log(coordinates);
-
   let apiKey = "2374eba8044tffoa6bba2f4241b376c8";
   let apiUrl = `https://api.shecodes.io/weather/v1/forecast?lon=${coordinates.longitude}&lat=${coordinates.latitude}&key=${apiKey}&units=metric`;
   console.log(apiUrl);
